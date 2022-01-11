@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import Layout from '../components/Layout';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { useMutation, gql} from '@apollo/client'
+import Layout from '../components/Layout';
+
 
 const NEW_ACCOUNT = gql`
     mutation newUser($input: UserInput) {
@@ -22,6 +24,8 @@ const NewAccount = () => {
 
     //get products from GraphQL
     const [ newUser ] = useMutation( NEW_ACCOUNT )
+
+    const router = useRouter()
 
 
      //Form validation
@@ -58,11 +62,28 @@ const NewAccount = () => {
                         }
                     }
                 })
-                console.log('user created')
+                
+                saveMessage(`User created`);
+
+                setTimeout(() => {
+                    saveMessage(null);
+                    router.push('/login')
+                }, 3000);
+
             }catch(error){
-               saveMessage(error.message) 
-            
+                saveMessage(error.message) 
+
+                setTimeout(() => {
+                    saveMessage(null);
+                }, 3000);
             }
+            
+            
+
+
+        
+
+     
             
             
         }
@@ -78,11 +99,8 @@ const NewAccount = () => {
     }
 
     return ( 
-
-       
         <>
             <Layout>
-
                 { message && showMessagge()}
                 <h1 className="text-center text-2xl text-white font-light">Create New Account</h1>
 
@@ -192,8 +210,6 @@ const NewAccount = () => {
                     </div>
                 </div>
             </Layout>
-
-      
         </>
      );
 }
