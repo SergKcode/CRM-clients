@@ -1,10 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Layout from '../components/Layout';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useMutation, gql} from '@apollo/client'
+
+const NEW_ACCOUNT = gql`
+    mutation newUser($input: UserInput) {
+        newUser(input: $input) {
+            id
+            name
+            surname
+            email
+        }
+    }
+`;
 
 
 const NewAccount = () => {
+
+    const [ message, saveMessage ] = useState(null)
+
+    //get products from GraphQL
+    const [ newUser ] = useMutation( NEW_ACCOUNT )
 
 
      //Form validation
@@ -28,18 +45,45 @@ const NewAccount = () => {
                         .min(6, 'Password should contains at least 6 characters')
         }),
         onSubmit: async values => {
+            const {  name, surname, email, password } = values
            
-            const { name, surname, email, password } = values
+            try{
+               const { data } = await newUser({
+                    variables: {
+                        input:{
+                            name,
+                            surname,
+                            email,
+                            password
+                        }
+                    }
+                })
+                console.log('user created')
+            }catch(error){
+               saveMessage(error.message) 
+            
+            }
             
             
         }
     });
+
+    const showMessagge=()=>{
+        return(
+            <div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
+                <p>{message}</p>
+
+            </div>
+        )
+    }
 
     return ( 
 
        
         <>
             <Layout>
+
+                { message && showMessagge()}
                 <h1 className="text-center text-2xl text-white font-light">Create New Account</h1>
 
                 <div className="flex justify-center mt-5">
