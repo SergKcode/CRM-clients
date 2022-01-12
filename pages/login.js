@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useMutation, gql} from '@apollo/client'
+import { useMutation, gql} from '@apollo/client';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 
 const AUTHENTICATE_USER =gql`
@@ -33,10 +34,10 @@ const Login = () => {
             password: Yup.string()
                         .required('Password required')
         }), 
-        onSubmit: async valores => {
-            console.log(valores);
+        onSubmit: async values => {
+            console.log(values);
 
-            const { email, password } = valores;
+            const { email, password } = values;
 
             try {
                 const { data } = await authenticateUser({
@@ -89,7 +90,7 @@ const Login = () => {
             <Layout>
                 <h1 className="text-center text-2xl text-white font-light">Login</h1>
 
-                {mensaje && showMessage() }
+                {message && showMessage() }
 
                 <div className="flex justify-center mt-5">
                     <div className='w-full max-w-sm'>
