@@ -3,6 +3,7 @@ import React from 'react';
 import Head from 'next/head'
 import Sidebar from './Sidebar';
 import { useRouter } from 'next/router';
+import Header from './Header';
 
 const Layout = ({children}) => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const Layout = ({children}) => {
                         
                        
                         <main className="sm:w-2/3 xl:w-4/5 sm:min-h-screen p-5">
-                           
+                            <Header />
                             {children}
                         </main>
                         
