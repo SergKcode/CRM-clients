@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 
-const GET_CLIENTES_USER = gql`
+const GET_CLIENTS_USER= gql`
     query getClientsSeller {
       getClientsSeller {
             id
@@ -21,7 +21,7 @@ const Index = () => {
   const router = useRouter();
 
 
-  const { data, loading, error } = useQuery(GET_CLIENTES_USER);
+  const { data, loading, error } = useQuery(GET_CLIENTS_USER);
 
 
   if(loading) return 'Loading...';

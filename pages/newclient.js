@@ -6,7 +6,7 @@ import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router'
 
 const NEW_CLIENT = gql`
-    mutation newClient($input: ClienteInput) {
+    mutation newClient($input: ClientInput) {
         newClient(input: $input) {
             id
             name

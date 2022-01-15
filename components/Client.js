@@ -32,7 +32,7 @@ const Client = ({client}) => {
 
      
             cache.writeQuery({
-                query: OBTENER_CLIENTES_USUARIO,
+                query: GET_CLIENTS_USER,
                 data: {
                     getClientsSeller : getClientsSeller.filter( currentClient => currentClient.id !== id )
                 }
